@@ -232,8 +232,7 @@ export default function Products() {
 									fontFamily={'sans-serif'}
 									fontWeight={'bold'}
 									color={'#1b1b1b'}>
-									{/* {` ${doc.data().price} جنيه`} */}
-									{item.data().price}جنيه
+									{item.data().price} جنيه
 								</Heading>
 								{!admin && (
 									<Flex
@@ -663,9 +662,7 @@ export default function Products() {
 				p={{ base: '1', sm: '6' }}
 				marginBottom={'20px'}
 				backgroundColor={'#fff'}
-				// rowGap={'20px'}
 				className='grid-popular'
-				// gridColumnGap={'4px'}
 				placeItems={'center'}
 				gridRowGap='22px'
 				templateColumns={

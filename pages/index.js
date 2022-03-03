@@ -23,6 +23,7 @@ export default function Home() {
 			console.log(user);
 			router.push('/');
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [user]);
 	return (
 		<>

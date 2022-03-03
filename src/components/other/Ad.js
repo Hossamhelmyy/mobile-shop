@@ -58,7 +58,7 @@ export default function Ad() {
 						key={index}>
 						{index === current && (
 							<Image
-								h={{ base: '38vh', md: '56vh', lg: '76vh' }}
+								h={{ base: '0', md: '50vh', lg: '60vh' }}
 								src={slide.image}
 								alt='travel image'
 								className='image'

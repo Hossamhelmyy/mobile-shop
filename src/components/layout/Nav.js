@@ -41,6 +41,7 @@ export default function Nav({}) {
 
 	useEffect(() => {
 		checkAdmin();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [user]);
 
 	async function checkAdmin() {
@@ -52,13 +53,17 @@ export default function Nav({}) {
 			const currAccData = await getDocs(currentAccQuery);
 			currAccData.docs.map((user) => {
 				if (user.data().admin === true) {
+					console.log(user.data().admin);
 					adminCheck(true);
-					console.log(user.data());
+					// console.log(user.data());
+				} else {
+					adminCheck(false);
+					console.log('user');
 				}
 			});
 		}
-		console.log('no user');
 	}
+	console.log(admin);
 	const clearState = useStore((state) => state.clearState);
 	const router = useRouter();
 
