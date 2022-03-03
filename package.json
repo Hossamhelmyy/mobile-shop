@@ -1,0 +1,42 @@
+{
+    "name": "drug-store",
+    "private": true,
+    "scripts": {
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start",
+        "lint": "next lint"
+    },
+    "dependencies": {
+        "@chakra-ui/react": "^1.7.4",
+        "@emotion/react": "^11.7.1",
+        "@emotion/styled": "^11.6.0",
+        "@fontsource/tajawal": "^4.5.0",
+        "chart.js": "^3.7.1",
+        "chartjs-react": "^3.4.0",
+        "cookies": "^0.8.0",
+        "firebase": "^9.6.6",
+        "formik": "^2.2.9",
+        "framer-motion": "^5.5.6",
+        "immer": "^9.0.12",
+        "js-cookie": "^3.0.1",
+        "next": "12.0.7",
+        "react": "17.0.2",
+        "react-chartjs-2": "^4.0.1",
+        "react-dom": "17.0.2",
+        "react-firebase-hooks": "^5.0.0",
+        "react-icons": "^4.3.1",
+        "react-router": "^6.2.1",
+        "react-router-dom": "^6.2.1",
+        "sass": "^1.47.0",
+        "swal": "^0.1.0",
+        "sweetalert": "^2.1.2",
+        "uuid": "^8.3.2",
+        "wbm": "^1.1.16",
+        "zustand": "^3.6.9"
+    },
+    "devDependencies": {
+        "eslint": "8.6.0",
+        "eslint-config-next": "12.0.7"
+    }
+}
