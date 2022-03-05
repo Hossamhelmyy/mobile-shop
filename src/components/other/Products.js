@@ -18,7 +18,6 @@ import Toast from '../uts/Toast';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
-import Cookies from 'js-cookie';
 import { useEffect, useState } from 'react';
 import { CgDetailsMore } from 'react-icons/cg';
 import {
@@ -84,10 +83,9 @@ export default function Products() {
 	useEffect(() => {
 		if (mustFetch && db) {
 			fetch();
-			console.log(myArray);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [mainCategory, filter]);
+	}, [mainCategory, filter, mustFetch]);
 
 	const addItems = (product, id) => {
 		const exist = cartItems.find((item) => item.id === id);
@@ -147,6 +145,8 @@ export default function Products() {
 	const deleteDrug = async (id) => {
 		try {
 			await deleteDoc(doc(db, 'products', id));
+			setLoading(true);
+			setMustFetch(true);
 			Toast(
 				'good Job',
 				'item has been deleted',

@@ -104,60 +104,84 @@ export default function Nav({}) {
 					</Flex>
 				</Flex>
 				{!admin && user ? (
-					<Flex
-						_hover={{
-							bg: '#6dacf3',
-							boxShadow: '2px 2px 1px rgba(0,0,0, .2)',
-						}}
-						cursor={'pointer'}
-						p={'4px 18px'}
-						borderRadius={'60px'}
-						align={'center'}
-						justifyContent='center'
-						flexDirection={'row'}>
-						<Flex>
+					<>
+						<Flex
+							_hover={{
+								bg: '#6dacf3',
+								boxShadow: '2px 2px 1px rgba(0,0,0, .2)',
+							}}
+							cursor={'pointer'}
+							p={'4px 18px'}
+							borderRadius={'60px'}
+							align={'center'}
+							justifyContent='center'
+							flexDirection={'row'}>
+							<Flex>
+								<Icon
+									color={'#fff'}
+									fontSize={'25px'}
+									as={CgProfile}
+								/>
+							</Flex>
+							<Menu>
+								<MenuButton>
+									<Flex
+										mt={'8px'}
+										mr={'5px'}
+										alignItems={'center'}
+										justifyContent='center'>
+										<Text
+											// fontWeight='bold'
+											fontSize={'17px'}
+											color={'#fff'}>
+											حسابي
+										</Text>
+										<Icon
+											color={'#fff'}
+											fontSize={'15px'}
+											as={HiArrowSmDown}
+										/>
+									</Flex>
+								</MenuButton>
+								<Portal>
+									<MenuList>
+										<MenuItem
+											onClick={() =>
+												router.push('/myOrders')
+											}>
+											طلباتي
+										</MenuItem>
+										<MenuItem
+											onClick={() =>
+												router.push('/profile')
+											}>
+											الملف الشخصي
+										</MenuItem>
+									</MenuList>
+								</Portal>
+							</Menu>
+						</Flex>
+						<Flex
+							order={5}
+							flexDirection={'column'}
+							onClick={() => router.push('/cart')}>
+							<Text
+								fontWeight={'bold'}
+								color={'#e2d2d3'}
+								mb='-3'
+								mr='3'>
+								{cartItems.length}
+							</Text>
 							<Icon
-								color={'#fff'}
-								fontSize={'25px'}
-								as={CgProfile}
+								cursor={'pointer'}
+								as={BsCart2}
+								w='7'
+								h='7'
+								onClick={() => router.push('/cart')}
+								color={'#f2f5ef'}
 							/>
 						</Flex>
-						<Menu>
-							<MenuButton>
-								<Flex
-									mt={'8px'}
-									mr={'5px'}
-									alignItems={'center'}
-									justifyContent='center'>
-									<Text
-										// fontWeight='bold'
-										fontSize={'17px'}
-										color={'#fff'}>
-										حسابي
-									</Text>
-									<Icon
-										color={'#fff'}
-										fontSize={'15px'}
-										as={HiArrowSmDown}
-									/>
-								</Flex>
-							</MenuButton>
-							<Portal>
-								<MenuList>
-									<MenuItem
-										onClick={() =>
-											router.push('/myOrders')
-										}>
-										طلباتي
-									</MenuItem>
-									<MenuItem
-										onClick={() => router.push('/profile')}>
-										الملف الشخصي
-									</MenuItem>
-								</MenuList>
-							</Portal>
-						</Menu>
-					</Flex>
+					</>
 				) : (
 					''
 				)}
@@ -245,27 +269,6 @@ export default function Nav({}) {
 							color={'#6dacf3'}>
 							تسجيل الخروج
 						</Button>
-
-						<Flex
-							order={5}
-							flexDirection={'column'}
-							onClick={() => router.push('/cart')}>
-							<Text
-								fontWeight={'bold'}
-								color={'#e2d2d3'}
-								mb='-3'
-								mr='3'>
-								{cartItems.length}
-							</Text>
-							<Icon
-								cursor={'pointer'}
-								as={BsCart2}
-								w='7'
-								h='7'
-								onClick={() => router.push('/cart')}
-								color={'#f2f5ef'}
-							/>
-						</Flex>
 					</>
 				) : (
 					''

@@ -45,7 +45,6 @@ function PopularProducts() {
 	const updateCart = useStore((state) => state.updateCart);
 	const admin = useStore((state) => state.admin);
 	const cartItems = useStore((state) => state.cartItems);
-
 	const fetch = async () => {
 		try {
 			const mainQuery = query(
@@ -72,7 +71,7 @@ function PopularProducts() {
 		}
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	}, [mustFetch]);
 	console.log(myArray);
 	const deleteItemFromPopular = async (id) => {
 		console.log(id);
@@ -88,6 +87,8 @@ function PopularProducts() {
 					star: false,
 				}).then((docc) => console.log(docc));
 			});
+			setLoading(true);
+			setMustFetch(true);
 			swalToast(
 				'good Job',
 				'item has been deleted from popular products',
