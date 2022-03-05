@@ -26,7 +26,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { getAuth, signOut } from 'firebase/auth';
 import { useRouter } from 'next/router';
 import { useStore } from '../store/Store';
-import { db } from '../firebase/Firebase';
+import { db } from '../firebase/firebase';
 
 export default function Dashboard() {
 	const [display, changeDisplay] = useState('hide');
