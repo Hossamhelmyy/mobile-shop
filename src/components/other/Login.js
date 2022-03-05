@@ -20,7 +20,7 @@ import {
 	signInWithEmailAndPassword,
 } from 'firebase/auth';
 import swal from 'sweetalert';
-import { db } from '../../../firebase/Firebase';
+import { db } from '../../../firebase/firebase';
 import { collection, addDoc } from 'firebase/firestore';
 import { useStore } from '../../../store/Store';
 

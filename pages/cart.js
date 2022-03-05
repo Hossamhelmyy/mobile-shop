@@ -19,7 +19,7 @@ import {
 import { doc, updateDoc } from 'firebase/firestore';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
 import Toast from '../src/components/uts/Toast';
-import { db } from '../firebase/Firebase';
+import { db } from '../firebase/firebase';
 
 export default function Cart() {
 	const router = useRouter();
