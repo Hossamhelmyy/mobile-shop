@@ -15,7 +15,7 @@ import {
 	where,
 	getDocs,
 } from 'firebase/firestore';
-import { db } from '../firebase/firebase';
+import { db } from '../uit/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { getAuth, signOut } from 'firebase/auth';
 import { useRouter } from 'next/router';

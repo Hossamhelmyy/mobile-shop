@@ -29,7 +29,7 @@ import {
 	addDoc,
 	serverTimestamp,
 } from 'firebase/firestore';
-import { db } from '../../../firebase/Firebase';
+import { db } from '../../../uit/Firebase';
 
 export default function Nav({}) {
 	const cartItems = useStore((state) => state.cartItems);
