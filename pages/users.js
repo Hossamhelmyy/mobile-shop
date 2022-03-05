@@ -15,7 +15,7 @@ import {
 	where,
 	getDocs,
 } from 'firebase/firestore';
-import { db } from '../uit/firebase';
+import { db } from '../src/components/uit/firebase';
 export default function Users() {
 	const [myData, setmyData] = useState([]);
 

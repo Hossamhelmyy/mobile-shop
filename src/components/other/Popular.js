@@ -25,7 +25,7 @@ import {
 } from 'firebase/firestore';
 import Link from 'next/link';
 
-import { db } from '../../../uit/firebase';
+import { db } from '../uit/firebase';
 import { getAuth } from 'firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { BsCart2 } from 'react-icons/bs';

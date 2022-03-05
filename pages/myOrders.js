@@ -17,7 +17,7 @@ import {
 } from 'firebase/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { getAuth, signOut } from 'firebase/auth';
-import { db } from '../uit/firebase';
+import { db } from '../src/components/uit/firebase';
 import { useRouter } from 'next/router';
 
 export default function MyOrders() {

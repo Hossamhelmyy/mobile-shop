@@ -1,7 +1,7 @@
 import '../styles/globals.css';
 import { ChakraProvider } from '@chakra-ui/react';
 import theme from '../styles/theme';
-import { firebaseApp } from '../uit/firebase';
+import { firebaseApp } from '../src/components/uit/firebase';
 import { Provider, useCreateStore } from '../store/Store';
 
 function MyApp({ Component, pageProps }) {
