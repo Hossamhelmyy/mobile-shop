@@ -4,8 +4,10 @@ import React, {
 	useLayoutEffect,
 } from 'react';
 import { BsCart2 } from 'react-icons/bs';
-
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { getAuth } from 'firebase/auth';
 import Nav from '../../src/components/layout/Nav';
+
 import {
 	Flex,
 	Text,
@@ -25,15 +27,22 @@ import {
 	getDocs,
 } from 'firebase/firestore';
 import { getFirestore } from 'firebase/firestore';
+import { useStore } from '../../store/Store';
+import Toast from '../../src/components/uts/Toast';
 
 function Item({ id }) {
 	const db = getFirestore();
 	const [myData, setMyData] = useState({});
+	const auth = getAuth();
+	const [user, loading, error] = useAuthState(auth);
+	const addToCart = useStore((state) => state.addToCart);
+	const updateCart = useStore((state) => state.updateCart);
+	const cartItems = useStore((state) => state.cartItems);
 
 	useEffect(() => {
 		fetch();
-	}, []);
-
+	}, [user]);
+	console.log(myData);
 	async function fetch() {
 		try {
 			const fetchData = query(
@@ -46,9 +55,29 @@ function Item({ id }) {
 			console.log(e);
 		}
 	}
+	const addItems = (product, id) => {
+		if (!user) {
+			router.push('/login');
+		} else {
+			const exist = cartItems.find(
+				(item) => item.id === id,
+			);
+			if (exist) {
+				updateCart(id, exist.quantity + 1);
+			} else {
+				addToCart({
+					product: product,
+					quantity: 1,
+					price: product.price,
+					id: id,
+				});
+			}
+			Toast(' تمت الاضافة بنجاح', null, 'success');
+		}
+	};
 	return (
 		<>
-			<Nav src={'../../public/imgs/logo_bchz-og2.png'} />
+			<Nav />
 			<Flex alignItems={'center'} justifyContent='center'>
 				<Text
 					display={'inline-block'}
@@ -64,9 +93,10 @@ function Item({ id }) {
 			<Flex
 				pb={'50px'}
 				alignItems={'center'}
+				flexDirection={{ base: 'column', md: 'row' }}
 				justifyContent='space-around'>
 				<Flex
-					mt={'-110px'}
+					mt={{ base: '30px', md: '-110px' }}
 					flexDirection='column'
 					alignItems={'center'}
 					flexBasis={'50%'}>
@@ -81,7 +111,7 @@ function Item({ id }) {
 					</Flex>
 					<Image
 						boxShadow={'3px 3px 3px 5px rgba(0,0,0,.1)'}
-						maxW={'460px'}
+						w={{ base: '300px', sm: '380px', md: '460px' }}
 						alt='img'
 						pb={'40px'}
 						src={myData.img}
@@ -90,12 +120,11 @@ function Item({ id }) {
 					/>
 					<Button
 						mt={'20px'}
-						w='460px'
+						w={{ base: '300px', sm: '380px', md: '460px' }}
 						p={'4px 0'}
-						// onClick={() => {
-						// 	addToCart(doc.data(), doc.id);
-						// 	Toast(' تمت الاضافة بنجاح', null, 'success');
-						// }}
+						onClick={() => {
+							addItems(myData, myData.id);
+						}}
 						dir='ltr'
 						leftIcon={<BsCart2 fontSize={'1.3rem'} />}
 						fontSize='sm'
@@ -113,7 +142,7 @@ function Item({ id }) {
 					fontFamily={'sans-serif'}
 					fontWeight='bold'
 					boxShadow={'3px 3px 3px 5px rgba(0,0,0,.1)'}
-					w={'40vw'}>
+					w={{ base: '80vw', md: '40vw' }}>
 					<Flex
 						flexDirection={'row'}
 						p={'10px 20px 2px 20px'}

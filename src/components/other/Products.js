@@ -38,8 +38,9 @@ export default function Products() {
 	const auth = getAuth();
 	const [pagination, setPagination] = useState('');
 	const [currentPage, setCurrentPage] = useState(1);
-	const [postsPerPage] = useState(10);
-	const [mainCategory, setMainCategory] = useState('pcs');
+	const [postsPerPage] = useState(8);
+	const [mainCategory, setMainCategory] =
+		useState('laptops');
 	const [filter, setFilter] = useState('');
 	const router = useRouter();
 	const [loading, setLoading] = useState(true);
@@ -50,6 +51,7 @@ export default function Products() {
 	const updateCart = useStore((state) => state.updateCart);
 	const cartItems = useStore((state) => state.cartItems);
 	const admin = useStore((state) => state.admin);
+	const [user, loading2, error] = useAuthState(auth);
 
 	const [searchTerm, setSearchTerm] = useState('');
 	const mainQuery = query(
@@ -88,16 +90,23 @@ export default function Products() {
 	}, [mainCategory, filter, mustFetch]);
 
 	const addItems = (product, id) => {
-		const exist = cartItems.find((item) => item.id === id);
-		if (exist) {
-			updateCart(id, exist.quantity + 1);
+		if (!user) {
+			router.push('/login');
 		} else {
-			addToCart({
-				product: product,
-				quantity: 1,
-				price: product.price,
-				id: id,
-			});
+			const exist = cartItems.find(
+				(item) => item.id === id,
+			);
+			if (exist) {
+				updateCart(id, exist.quantity + 1);
+			} else {
+				addToCart({
+					product: product,
+					quantity: 1,
+					price: product.price,
+					id: id,
+				});
+			}
+			Toast(' تمت الاضافة بنجاح', null, 'success');
 		}
 	};
 	let indexOfLastPost = currentPage * postsPerPage;
@@ -261,11 +270,6 @@ export default function Products() {
 													item.data(),
 													item.data().id,
 												);
-												Toast(
-													' تمت الاضافة بنجاح',
-													null,
-													'success',
-												);
 											}}
 											dir='ltr'
 											leftIcon={
@@ -394,11 +398,6 @@ export default function Products() {
 									<Button
 										onClick={() => {
 											addItems(item.data(), item.data().id);
-											Toast(
-												' تمت الاضافة بنجاح',
-												null,
-												'success',
-											);
 										}}
 										dir='ltr'
 										leftIcon={

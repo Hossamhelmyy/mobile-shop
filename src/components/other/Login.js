@@ -23,6 +23,8 @@ import swal from 'sweetalert';
 import { db } from '../uit/firebase';
 import { collection, addDoc } from 'firebase/firestore';
 import { useStore } from '../../../store/Store';
+let errors = [];
+let errors2 = [];
 
 export default function Login() {
 	const auth = getAuth();
@@ -34,32 +36,25 @@ export default function Login() {
 	const goToHome = () => {
 		router.push('/');
 	};
-	// const storeUser = useStore((state) => state.storeUser);
 	const validate = (values) => {
 		if (LoginForm) {
-			let errors = {};
-
-			if (values.email === '') errors.email = 'Required';
-
-			if (values.password === '')
-				errors.password = 'Required';
-
-			return errors;
+			if (values.email === '' || values.password === '') {
+				errors2.push('required');
+			} else {
+				errors2 = [];
+			}
 		} else {
-			let errors = {};
-			if (values.email === '') errors.email = 'Required';
-
-			if (values.password === '')
-				errors.password = 'Required';
-			if (values.phoneNum === '')
-				errors.phoneNum = 'Required';
-
-			if (values.address === '')
-				errors.address = 'Required';
-			if (values.username === '')
-				errors.username = 'Required';
-			console.log(formik.errors);
-			return errors;
+			if (
+				values.email === '' ||
+				values.password === '' ||
+				values.phoneNum === '' ||
+				values.address === '' ||
+				values.username === ''
+			) {
+				errors.push('required');
+			} else {
+				errors = [];
+			}
 		}
 	};
 	const formik = useFormik({
@@ -70,11 +65,13 @@ export default function Login() {
 			email: '',
 			password: '',
 		},
+
 		validate,
 		onSubmit: (values) => {
 			handleLogin();
 		},
 	});
+	console.log(formik.errors);
 	const email = formik.values?.email;
 	const username = formik.values.username;
 	const phoneNum = formik.values.phoneNum;
@@ -92,7 +89,6 @@ export default function Login() {
 						passWord,
 					);
 				if (userCardential) {
-					console.log(userCardential);
 					const docRef = await addDoc(
 						collection(db, 'users'),
 						{
@@ -111,16 +107,14 @@ export default function Login() {
 						icon: 'تم',
 						button: 'ok',
 					});
-					userCheck(user.user);
-					console.log(userbol);
-
+					userCheck(userCardential.user);
 					router.push('/');
-					console.log(docRef.id);
 				}
 			} catch (e) {
+				console.log(e);
 				return swal({
 					title: 'هناك خطأ حدث',
-					text: 'البريد الالكتروني الذي ادخلته موجود بالفعل',
+					text: `${e}`,
 					icon: 'warning',
 					buttons: 'حاول مره اخري',
 					dangerMode: true,
@@ -270,9 +264,7 @@ export default function Login() {
 								colorScheme={'blue'}
 								onClick={LoginDone}
 								type='submit'
-								disabled={
-									Object.keys(formik.errors).length > 0
-								}
+								disabled={errors2.length > 0}
 								mt='10'>
 								الدخول
 							</Button>
@@ -429,9 +421,7 @@ export default function Login() {
 							<Button
 								colorScheme={'blue'}
 								type='submit'
-								disabled={
-									Object.keys(formik.errors).length > 0
-								}
+								disabled={errors.length > 0}
 								mt='10'>
 								التسجيل
 							</Button>

@@ -35,8 +35,11 @@ import Loader from '../uts/Loader';
 import { useStore } from '../../../store/Store';
 import { CgDetailsMore } from 'react-icons/cg';
 import Toast from '../uts/Toast';
+import { useRouter } from 'next/router';
 
 function PopularProducts() {
+	const router = useRouter();
+	const auth = getAuth();
 	const [loading, setLoading] = useState(true);
 	const [mustFetch, setMustFetch] = useState(true);
 	const [myArray, setMyArray] = useState([]);
@@ -45,6 +48,8 @@ function PopularProducts() {
 	const updateCart = useStore((state) => state.updateCart);
 	const admin = useStore((state) => state.admin);
 	const cartItems = useStore((state) => state.cartItems);
+	const [user, loading2, error] = useAuthState(auth);
+
 	const fetch = async () => {
 		try {
 			const mainQuery = query(
@@ -71,7 +76,7 @@ function PopularProducts() {
 		}
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [mustFetch]);
+	}, [mustFetch, user]);
 	console.log(myArray);
 	const deleteItemFromPopular = async (id) => {
 		console.log(id);
@@ -107,16 +112,23 @@ function PopularProducts() {
 		}
 	};
 	const addItems = (product, id) => {
-		const exist = cartItems.find((item) => item.id === id);
-		if (exist) {
-			updateCart(id, exist.quantity + 1);
+		if (!user) {
+			router.push('/login');
 		} else {
-			addToCart({
-				product: product,
-				quantity: 1,
-				price: product.price,
-				id: id,
-			});
+			const exist = cartItems.find(
+				(item) => item.id === id,
+			);
+			if (exist) {
+				updateCart(id, exist.quantity + 1);
+			} else {
+				addToCart({
+					product: product,
+					quantity: 1,
+					price: product.price,
+					id: id,
+				});
+			}
+			Toast(' تمت الاضافة بنجاح', null, 'success');
 		}
 	};
 
@@ -252,11 +264,6 @@ function PopularProducts() {
 												addItems(
 													item.data(),
 													item.data().id,
-												);
-												Toast(
-													' تمت الاضافة بنجاح',
-													null,
-													'success',
 												);
 											}}
 											dir='ltr'
